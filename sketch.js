@@ -1,140 +1,126 @@
 const Engine = Matter.Engine;
-const World= Matter.World;
+const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
 var engine, world;
+var holder,polygon,ground;
+var stand1,stand2;
+var polygon;
+var slingShot;
+var polygon_img;
+function preload(){
+  polygon_img=loadImage("polygon.png");
+}
+function setup() {
+  createCanvas(900,400);
+  engine = Engine.create();
+  world = engine.world;
+  Engine.run(engine);
+  ground = new Ground();
+  stand1 = new Stand(390,300,250,10);
+  stand2 = new Stand(700,200,200,10);
+ 
+  //level one
+  block1 = new Block(300,275,30,40);
+  block2 = new Block(330,275,30,40);
+  block3 = new Block(360,275,30,40);
+  block4 = new Block(390,275,30,40);
+  block5 = new Block(420,275,30,40);
+  block6 = new Block(450,275,30,40);
+  block7 = new Block(480,275,30,40);
+  //level two
+  block8 = new Block(330,235,30,40);
+  block9 = new Block(360,235,30,40);
+  block10 = new Block(390,235,30,40);
+  block11 = new Block(420,235,30,40);
+  block12 = new Block(450,235,30,40);
+  //level three
+  block13 = new Block(360,195,30,40);
+  block14 = new Block(390,195,30,40);
+  block15 = new Block(420,195,30,40);
+  //top
+  block16 = new Block(390,155,30,40);
 
-function setup(){
-    var canvas = createCanvas(800,400);
-    
-    engine = Engine.create();
-    world = engine.world;
+  //set 2 for second stand
+  //level one
+  blocks1 = new Block(640,175,30,40);
+  blocks2 = new Block(670,175,30,40);
+  blocks3 = new Block(700,175,30,40);
+  blocks4 = new Block(730,175,30,40);
+  blocks5 = new Block(760,175,30,40);
+  //level two
+  blocks6 = new Block(670,135,30,40);
+  blocks7 = new Block(700,135,30,40);
+  blocks8 = new Block(730,135,30,40);
+  //top
+  blocks9 = new Block(700,95,30,40);
 
-    box1 = new Bluebox(500,360,20,30);
-    box2 = new Yellowbox(520,360,20,30);
-    box3 = new Greenbox(540,360,20,30);
-    box4 = new Redbox(560,360,20,30);
-    box5 = new Greenbox(580,360,20,30);
-    box6 = new Yellowbox(600,360,20,30);
-    
-    box7 = new Redbox(510,330,20,30);
-    box8 = new Yellowbox(530,330,20,30);
-    box9 = new Bluebox(550,330,20,30);
-    box10 = new Redbox(570,330,20,30);
-    box11 = new Greenbox(590,360,20,30);
-    
-    box12 = new Yellowbox(520,310,20,30);
-    box13 = new Bluebox(540,310,20,30);
-    box14 = new Redbox(560,310,20,30);
-    box15 = new Greenbox(580,310,20,30);
-
-    box16 = new Yellowbox(530,280,20,30);
-    box17 = new Redbox(550,280,20,30);
-    box18 = new Greenbox(570,280,20,30);
-
-    box19 = new Bluebox(540,250,20,30);
-    box20 = new Redbox(560,250,20,30);
-
-    box21 = new Greenbox(550,220,20,30);
-
-    box22 = new Greenbox(500,135,20,30);
-    box23 = new Bluebox(520,135,20,30);
-    box24 = new Yellowbox(540,135,20,30);
-    box25 = new Redbox(560,315,20,30);
-    box26 = new Greenbox(580,315,20,30);
-    box27 = new Yellowbox(600,315,20,30);
-
-    box28 = new Bluebox(510,105,20,30);
-    box29 = new Redbox(530,105,20,30);
-    box30 = new Yellowbox(550,105,20,30);
-    box31 = new Greenbox(570,105,20,30);
-    box32 = new Redbox(590,105,20,30);
-
-    box33 = new Yellowbox(520,75,20,30);
-    box34 = new Bluebox(540,75,20,30);
-    box35 = new Redbox(560,75,20,30);
-    box36 = new Greenbox(580,75,20,30);
-
-    box37 = new Yellowbox(530,45,20,30);
-    box38 = new Bluebox(550,45,20,30);
-    box39 = new Greenbox(570,45,20,30);
-
-    ball = new Ball(0,0,50);
-
-    spring = new Projectile(ball.body,{x:200,y:200});
-
-    ground = new Platform(400,390,800,20);
-
-    groundHovering = new Platform(550,160,200,20);
+  //polygon holder with slings
+  polygon = Bodies.circle(50,200,20);
+  World.add(world,polygon);
+  
+  slingShot = new Slingshot(this.polygon,{x:100,y:200});
 
 }
+function draw() {
+  background(56,44,44); 
+ 
+  //Engine.update(engine);
+  
+  textSize(20);
+  fill("lightyellow");
+  text("Drag the polygon to destroy the blocks",300,30);
+  ground.display();
+  stand1.display();
+  stand2.display();
+  strokeWeight(2);
+  stroke(15);
+  fill("skyblue");
+  block1.display();
+  block2.display();
+  block3.display();
+  block4.display();
+  block5.display();
+  block6.display();
+  block7.display();
+  fill("pink");
+  block8.display();
+  block9.display();
+  block10.display();
+  block11.display();
+  block12.display();
+  fill("turquoise");
+  block13.display();
+  block14.display();
+  block15.display();
+  fill("grey");
+  block16.display();
+  fill("skyblue");
+  blocks1.display();
+  blocks2.display();
+  blocks3.display();
+  blocks4.display();
+  blocks5.display();
+  fill("turquoise");
+  blocks6.display();
+  blocks7.display();
+  blocks8.display();
+  fill("pink")
+  blocks9.display();
+  fill("gold");
+  imageMode(CENTER)
+  image(polygon_img ,polygon.position.x,polygon.position.y,40,40);
 
-function draw(){
-    background(247, 223, 178);
-    Engine.update(engine);
-
-    debug:true;
-
-    box1.display();
-    box2.display();
-    box3.display();
-    box4.display();
-    box5.display();
-    box6.display();
-   
-    box7.display();
-    box8.display();
-    box9.display();
-    box10.display();
-    box10.display();
-    box11.display();
-    
-    box12.display();
-    box13.display();
-    box14.display();
-    box15.display();
-    
-    box16.display();
-    box17.display();
-    box18.display();
-   
-    box19.display();
-    box20.display();
-    
-    box21.display();
-   
-    box22.display();
-    box23.display();
-    box24.display();
-    box25.display();
-    box26.display();
-    
-    box27.display();
-    box28.display();
-    box29.display();
-    box30.display();
-    box31.display();
-    box32.display();
-
-    box33.display();
-    box34.display();
-    box35.display();
-    box36.display();
-    
-    box37.display();
-    box38.display();
-    box39.display();
-
-    ball.display();
-    spring.display();
-    ground.display();
-    groundHovering.display();
+  slingShot.display();
+  
 }
-
-function mouseDragger(){
-    Matter.Body.setPosition(ball.body,{x:mouseX,y:mouseY});
+function mouseDragged(){
+  Matter.Body.setPosition(this.polygon,{x:mouseX,y:mouseY});
 }
 function mouseReleased(){
-    spring.release();
+  slingShot.fly();
+}
+function keyPressed(){
+//write code for extra chance of the player
 }
